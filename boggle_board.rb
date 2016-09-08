@@ -5,21 +5,42 @@ class BoggleBoard
       @board = nil
   end
 
-  def shake! 
-     all_letters = ('A'..'Z').to_a  
-     temp_board = []
-     for i in (0..16) #4x4
-       if all_letters.sample == "Q"
-        #
-        temp_board << "Qu".ljust(3) #16 random letters
-      else
-        temp_board << all_letters.sample.ljust(2)
-      end
-     end
+  def shake!
+    temp_board =[]
+    die = []
+    @dice = [
+            %w(A A E E G N),
+            %w(A B B J O O),
+            %w(A C H O P S),
+            %w(A F F K P S),
+            %w(A O O T T W),
+            %w(C I M O T U),
+            %w(D E I L R X),
+            %w(D I S T T Y),
+            %w(E E G H N W),
+            %w(E E I N S U),
+            %w(E H R T V W),
+            %w(E I O S S T),
+            %w(E L R T T Y),
+            %w(H I M N U Q),
+            %w(H L N N R Z),
+            %w(D E I L R X)
+          ]
 
-     @board = Array.new(4) {
-       temp_board.shift(4).to_s.gsub!(/\W/,'')
-     }
+    @dice.each { |x|
+
+        letter = x.sample(1)[0]
+        if letter == "Q"
+          temp_board << "Qu".ljust(3)
+        else
+          temp_board << letter.ljust(2)
+        end
+    }    
+       # @dice = @dice.delete(die)
+
+    @board = Array.new(4) {
+     temp_board.shift(4).join
+    }  
   end
   # Defining to_s on an object controls how the object is
   # represented as a string, e.g., when you pass it to puts
@@ -35,6 +56,7 @@ class BoggleBoard
       "----\n----\n----\n----"
     else
       "#{@board[0]}\n#{@board[1]}\n#{@board[2]}\n#{@board[3]}"
+      #{}"#{@dice}"
     end
   end
 end
