@@ -1,3 +1,5 @@
+require 'byebug'
+
 class BoggleBoard
   def initialize
       @board = nil
@@ -7,11 +9,16 @@ class BoggleBoard
      all_letters = ('A'..'Z').to_a  
      temp_board = []
      for i in (0..16) #4x4
-       temp_board << all_letters.sample #16 random letters
+       if all_letters.sample == "Q"
+        #
+        temp_board << "Qu".ljust(3) #16 random letters
+      else
+        temp_board << all_letters.sample.ljust(2)
+      end
      end
 
      @board = Array.new(4) {
-       temp_board.shift(4).to_s.gsub!(/\W+/,'')
+       temp_board.shift(4).to_s.gsub!(/\W/,'')
      }
   end
   # Defining to_s on an object controls how the object is
